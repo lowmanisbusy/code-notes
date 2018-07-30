@@ -6,7 +6,7 @@ from ihome.celery_task.main import celery_app
 from ihome.libs.yuntongxun.send_sms import CCP
 
 
-# 使用celery的装饰器进行装饰, 执行可能有耗时步骤的方法
+# 使用celery的装饰器进行装饰, 执行存在阻塞的方法
 @celery_app.task
 def send_sms(to, datas, temp_id):
     """发送短信的异步任务"""
