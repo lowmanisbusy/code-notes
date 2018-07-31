@@ -1,0 +1,6 @@
+文件 search_indexes.py 是用来进行搜索相关字段的内容关键词的模块
+这个文件应该建立在提供搜索的字段所在的应用的目录下
+文件名必须是search_indexes.py
+并且应先在settings 中进行设置
+
+创建了这个文件后,应该在templates目录下创建"search/indexes/goods/"目录,最后一个与应用名一致

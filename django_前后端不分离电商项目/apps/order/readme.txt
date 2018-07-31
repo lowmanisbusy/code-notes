@@ -1,0 +1,6 @@
+alipay_pubilc_key.pem
+app_private_key.pem这两个文件是与alipay借口进行交互的公钥与私钥,因为这个应用的视图
+中有类视图需要调用alipay借口,所以放在这里,需要把私钥在alipay上进行注册
+
+在运行环境导入帮助与alipay开发者接口进行交互的的包进行交互
+pip install python-alipay-sdk --upgrade
