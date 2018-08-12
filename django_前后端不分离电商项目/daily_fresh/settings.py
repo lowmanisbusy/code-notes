@@ -191,5 +191,5 @@ HAYSTACK_CONNECTIONS = {
 # 当添加、修改、删除数据时，自动生成索引
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-# 指定搜索结果每页的条数 这里设置成了1页
+# 指定搜索结果每页的条数 这里设置成了1条
 HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1
