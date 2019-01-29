@@ -1,4 +1,0 @@
-# 制定索引的属性, 这个文件名必须遵循格式, 第一个词是相应模型类名字的小写(在相应应用的model里)
-{{object.name}}
-{{object.desc}}
-{{object.goods.detail}}
