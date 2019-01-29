@@ -1,0 +1,4 @@
+common_dicorator.py 里面是各种装饰器
+common_reconverter.py 里面是转换器
+qi_niu_storage.py 定义上传图片到七牛服务器的函数
+captcha 是生成验证码的包

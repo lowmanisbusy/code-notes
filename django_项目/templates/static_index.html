@@ -1,0 +1,108 @@
+{# 先继承父模板 #}
+{% extends 'base.html' %}
+{# 继承后仍然需要导入静态文件 #}
+{% load staticfiles %}
+
+{# 标题有异, 每次更换完,及时测试,是否有BUG #}
+{% block title %}天天生鲜-首页{% endblock title %}
+
+{# 引入特有的js文件 #}
+{% block js_files %}
+    <script type="text/javascript" src={% static "js/jquery-1.12.4.min.js" %}></script>
+	<script type="text/javascript" src={% static "js/jquery-ui.min.js" %}></script>
+	<script type="text/javascript" src={% static "js/slide.js" %}></script>
+{% endblock js_files %}
+
+{% block body %}
+    <div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+            {% for type in types %}
+            {# forloop.counter 的是当前是第几轮循环的次数 #}
+			<li><a href="#model0{{ forloop.counter }}" class="{{ type.logo }}">{{ type.name }}</a></li>
+			{% endfor %}
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+                {#  首页轮播幻灯片 #}
+                {# 在自定义django系统文件的存储类中, 定义存储文件的服务器,服务器返回了一个url路径 #}
+                {# 在后台管理页面上,在不同的模型上传图片文件时, 就会将fdfs返回id存储在相应数据表的字段中,再加上url就可以访问完整路径 #}
+                {% for banner in index_banner %}
+				    <li><a href="{% url 'goods:detail' banner.sku.id %}"><img src="{{ banner.image.url }}" alt="幻灯片"></a></li>
+                {% endfor %}
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+            {% for banner in promotion_banner %}
+			<a href="{{ banner.url }}"><img src='{{ banner.image.url }}'></a>
+			{% endfor %}
+		</div>
+	</div>
+
+    {% for type in types%}
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model0{{ forloop.counter }}">{{ type.name }}</h3>
+			<div class="subtitle fl">
+				<span>|</span>
+                {# type种类首页展示的文字商品信息 #}
+                {% for banner in type.title_banner %}
+				<a href="{% url 'goods:detail' banner.sku.id %}">{{ banner.sku.name }}</a>
+                {% endfor %}
+			</div>
+			<a href="{% url 'goods:list' type.id 1 %}" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><a href={% url 'goods:list' type.id 1 %}><img src='{{ type.image.url }}'></a></div>
+			<ul class="goods_list fl">
+                {% for banner in type.image_banner %}
+				<li>
+					<h4><a href="{% url 'goods:detail' banner.sku.id %}">{{ banner.sku.name }}</a></h4>
+					<a href="{% url 'goods:detail' banner.sku.id %}"><img src={{ banner.sku.image.url }}></a>
+					<div class="prize">¥ {{ banner.sku.price }}</div>
+				</li>
+                {% endfor %}
+            </ul>
+		</div>
+	</div>
+    {% endfor %}
+
+{% endblock body %}
+
+{% block js1 %}<script type="text/javascript" src={% static "js/slideshow.js" %}></script>{% endblock js1 %}
+{% block js2%}
+    <script type="text/javascript">
+		BCSlideshow('focuspic');
+		var oFruit = document.getElementById('fruit_more');
+		var oShownum = document.getElementById('show_count');
+
+		var hasorder = localStorage.getItem('order_finish');
+
+		if(hasorder)
+		{
+			oShownum.innerHTML = '2';
+		}
+
+		oFruit.onclick = function(){
+			window.location.href = 'list.html';
+		}
+	</script>
+{% endblock js2 %}
+
+{# 未发现BUG #}
